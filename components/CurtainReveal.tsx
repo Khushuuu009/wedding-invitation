@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -131,13 +130,9 @@ export default function CurtainReveal({ onOpen }: Props) {
 
       setStep("closed");
 
-      timers.current.push(
-        setTimeout(() => setStep("half"), 700)
-      );
+      timers.current.push(setTimeout(() => setStep("half"), 700));
 
-      timers.current.push(
-        setTimeout(() => setStep("opening"), 1200)
-      );
+      timers.current.push(setTimeout(() => setStep("opening"), 1200));
 
       timers.current.push(
         setTimeout(() => {
@@ -238,65 +233,90 @@ export default function CurtainReveal({ onOpen }: Props) {
                 }}
               />
 
-              {/* Light Rays */}
+              {/* Light Rays (oversized + softer so no hard edges/lines show) */}
               <motion.div
-                className="absolute inset-0"
+                className="pointer-events-none absolute"
                 initial={{ opacity: 0 }}
-                animate={{ opacity: 0.6 }}
+                animate={{ opacity: 0.45 }}
                 transition={{ duration: 1.5 }}
                 style={{
+                  inset: "-25%",
                   background:
-                    "repeating-conic-gradient(from 180deg at 50% 50%, rgba(255,230,170,.25) 0deg 8deg, transparent 8deg 18deg)",
-                  filter: "blur(20px)",
+                    "repeating-conic-gradient(from 180deg at 50% 50%, rgba(255,230,170,.22) 0deg 8deg, transparent 8deg 18deg)",
+                  filter: "blur(40px)",
+                  WebkitMaskImage:
+                    "radial-gradient(circle at center, black 0%, black 35%, transparent 70%)",
+                  maskImage:
+                    "radial-gradient(circle at center, black 0%, black 35%, transparent 70%)",
                 }}
               />
 
-              {/* Left Curtain */}
+              {/* Left Curtain (overlaps the center slightly, no scaleX seam) */}
               <motion.div
-                className="absolute left-0 top-0 h-full w-[52%]"
-                initial={{ x: 0, scaleX: 1 }}
-                animate={{ x: "-110%", scaleX: 0.9 }}
+                className="absolute left-0 top-0 h-full"
+                initial={{ x: 0 }}
+                animate={{ x: "-105%" }}
                 transition={{
                   duration: 2.5,
                   ease: [0.77, 0, 0.175, 1],
                 }}
+                style={{
+                  width: "calc(50% + 2px)",
+                  willChange: "transform",
+                  backfaceVisibility: "hidden",
+                }}
               >
                 <SafeImg
                   src={ASSETS.left}
-                  className="h-full w-full object-cover"
+                  className="block h-full w-full object-cover"
                 />
               </motion.div>
 
               {/* Right Curtain */}
               <motion.div
-                className="absolute right-0 top-0 h-full w-[52%]"
-                initial={{ x: 0, scaleX: 1 }}
-                animate={{ x: "110%", scaleX: 0.9 }}
+                className="absolute right-0 top-0 h-full"
+                initial={{ x: 0 }}
+                animate={{ x: "105%" }}
                 transition={{
                   duration: 2.5,
                   ease: [0.77, 0, 0.175, 1],
                 }}
+                style={{
+                  width: "calc(50% + 2px)",
+                  willChange: "transform",
+                  backfaceVisibility: "hidden",
+                }}
               >
                 <SafeImg
                   src={ASSETS.right}
-                  className="h-full w-full object-cover"
+                  className="block h-full w-full object-cover"
                 />
               </motion.div>
 
-              {/* Top Curtain */}
+              {/* Top Curtain (soft bottom edge so no hard line is visible) */}
               <motion.div
-                className="absolute left-0 top-0 h-[28dvh] w-full"
+                className="absolute left-0 w-full"
                 initial={{ y: 0 }}
-                animate={{ y: "-100%" }}
+                animate={{ y: "-105%" }}
                 transition={{
                   delay: 1.3,
                   duration: 1.4,
                   ease: [0.77, 0, 0.175, 1],
                 }}
+                style={{
+                  top: -2,
+                  height: "calc(28dvh + 2px)",
+                  willChange: "transform",
+                  backfaceVisibility: "hidden",
+                  WebkitMaskImage:
+                    "linear-gradient(to bottom, black 0%, black 92%, transparent 100%)",
+                  maskImage:
+                    "linear-gradient(to bottom, black 0%, black 92%, transparent 100%)",
+                }}
               >
                 <SafeImg
                   src={ASSETS.top}
-                  className="h-full w-full object-cover object-bottom"
+                  className="block h-full w-full object-cover object-bottom"
                 />
               </motion.div>
 
@@ -321,9 +341,7 @@ export default function CurtainReveal({ onOpen }: Props) {
                     animate={{
                       opacity: [0, 1, 0],
                       y: -(80 + (i % 5) * 40),
-                      x:
-                        (i % 2 === 0 ? -1 : 1) *
-                        (20 + (i % 4) * 15),
+                      x: (i % 2 === 0 ? -1 : 1) * (20 + (i % 4) * 15),
                       scale: [0, 1.5, 0.5],
                       rotate: 360,
                     }}
@@ -408,12 +426,10 @@ export default function CurtainReveal({ onOpen }: Props) {
                     transition={{ delay: 0.5 }}
                     className="mt-10 font-serif text-6xl text-white"
                   >
-                    Tejas
+                    Harsh
                   </motion.h1>
 
-                  <div className="my-2 text-3xl text-yellow-300">
-                    &amp;
-                  </div>
+                  <div className="my-2 text-3xl text-yellow-300">&amp;</div>
 
                   <motion.h1
                     initial={{ opacity: 0, scale: 0.8 }}
@@ -421,7 +437,7 @@ export default function CurtainReveal({ onOpen }: Props) {
                     transition={{ delay: 0.7 }}
                     className="font-serif text-6xl text-white"
                   >
-                    Mansi
+                    Disha
                   </motion.h1>
 
                   <motion.button
